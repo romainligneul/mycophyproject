@@ -1,23 +1,5 @@
 ---
 title: Manuscript Template
-author:
-  - name: Author One
-    orcid: 0000-0002-0760-5497
-    corresponding: true
-    email: youremail@email.com
-    roles:
-      - Investigation
-      - Project administration
-      - Software
-      - Visualization
-    affiliations:
-      - name: CRNL
-  - name: Author Two
-    orcid: 0000-0002-7859-8394
-    corresponding: false
-    roles: []
-    affiliations:
-      - name: CRNL
 keywords:
   - quarto
   - neuroscience
