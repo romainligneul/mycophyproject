@@ -1,0 +1,114 @@
+---
+execute:
+  echo: false
+  output: false
+format:
+  docx
+jupyter: quarto-env
+editor:
+  render-on-save: false
+---
+
+```{python}
+#| output: asis
+#| echo: false
+
+# This cell can contain any number of functions that can later be called using shortcode tags of the form `{python} Ftest("hogg")`
+# All these functions output raw markdown
+
+from dotenv import load_dotenv
+import os
+load_dotenv('.env')
+
+import json
+from IPython.display import Markdown
+
+def Ftest(testname):
+    statdir=os.getenv("STATS_FOLDER")
+    prefix="ftest_"
+    # get the relevant json files
+    json_files = [file for file in os.listdir(statdir) if file.startswith(prefix) and file.endswith(testname+'.json')]
+    if len(json_files)!=1:
+      return "[FTEST STATS: no match or too many matches!]"
+    with open(statdir+"/"+json_files[0], 'r') as json_file:
+      stat = json.load(json_file)
+      fval='{:.2f}'.format(stat["stats"]["F"])
+      pval='{:.4f}'.format(stat["p"])
+      df='{:.0f}'.format(stat["stats"]["df"])
+      df1='{:.0f}'.format(stat["stats"]["df1"])
+      outputStr="(F(" + df1 + "," + df + ")=" + fval + ", " + pval + ")"
+      return outputStr
+
+def Ttest(testname):
+    statdir=os.getenv("STATS_FOLDER")
+    prefix="ttest_"
+    # get the relevant json files
+    json_files = [file for file in os.listdir(statdir) if file.startswith(prefix) and file.endswith(testname+'.json')]
+    if len(json_files)!=1:
+      return "[TTEST STATS: no match or too many matches!]"
+    with open(statdir+"/"+json_files[0], 'r') as json_file:
+      stat = json.load(json_file)
+      tval='{:.2f}'.format(stat["stats"]["tstat"])
+      pval='{:.4f}'.format(stat["p"])
+      df='{:.0f}'.format(stat["stats"]["df"])
+      ci='CI['+'{:.2f}'.format(stat["ci"][0])+','+'{:.2f}'.format(stat["ci"][1])+']'
+      outputStr="(t(" + df + ")=" + tval + ", " + pval + ", " + ci +")"
+      return outputStr
+
+
+def Mcorr(testname,var1,var2):
+    statdir=os.getenv("STATS_FOLDER")
+    prefix="matcorr_"
+    # get the relevant json files
+    json_files = [file for file in os.listdir(statdir) if file.startswith(prefix) and file.endswith(testname+'.json')]
+    if len(json_files)!=1:
+      return "[Mcorr STATS: no match or too many matches!]"
+    with open(statdir+"/"+json_files[0], 'r') as json_file:
+      stat = json.load(json_file)
+      ind1=stat["varNames"].index(var1)
+      ind2=stat["varNames"].index(var2)
+      if stat["pval"][ind1][ind2]<0.001:
+        pval="p<0.001"
+      else:
+        pval='p=' + '{:.4f}'.format(stat["pval"][ind1][ind2])
+      if stat["corrType"]=='spearman':
+        rhosymbol="ρ"
+      elif stat["corrType"]=='spearman':
+        rhosymbol="𝜏"
+      else:
+        rhosymbol="r"
+      rhoval='{:.2f}'.format(stat["rho"][ind1][ind2])
+      outputStr='(' + rhosymbol + '=' + rhoval + ", "+ pval + ")"
+      return outputStr
+
+def Rlm(testname,var1):
+    statdir=os.getenv("STATS_FOLDER")
+    prefix="Rreg_"
+    # get the relevant json files
+    json_files = [file for file in os.listdir(statdir) if file.startswith(prefix) and file.endswith(testname+'.json')]
+    if len(json_files)!=1:
+      return "[Rreg STATS: no match or too many matches!]"
+    with open(statdir+"/"+json_files[0], 'r') as json_file:
+      stat = json.load(json_file)
+      ind1=stat["varnames"].index(var1)
+      if stat["coefficients"][ind1][3]<0.001:
+        pval="p<0.001"
+      else:
+        pval='p=' + '{:.4f}'.format(stat["coefficients"][ind1][3])
+      betaval='{:.2f}'.format(stat["coefficients"][ind1][2])
+      outputStr='(β=' + betaval + ", "+ pval + ")"
+      return outputStr
+
+def textStat(testname,var1):
+    statdir=os.getenv("STATS_FOLDER")
+    prefix="text_"
+    # get the relevant json files
+    json_files = [file for file in os.listdir(statdir) if file.startswith(prefix) and file.endswith(testname+'.json')]
+    if len(json_files)!=1:
+      return "[text STATS: no match or too many matches!]"
+    with open(statdir+"/"+json_files[0], 'r') as json_file:
+      stat = json.load(json_file)
+      outputStr=stat[var1]
+      return outputStr
+
+```

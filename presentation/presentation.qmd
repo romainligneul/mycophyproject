@@ -1,0 +1,270 @@
+---
+title: "A modern pipeline for academic collaboration"
+format:
+  revealjs: 
+    theme: "simple"
+    footer: "R. Ligneul - COPHY - 10.10.23"
+    incremental: true
+    embed-resources: true
+    preview-links: auto
+    multiplex: true
+    progress: true
+---
+
+## Rationale
+
+As scientists, we spend a **lot** of time coding and writing.
+
+![](../_analyses/figures/timespent.png){fig-align="center" width="80%"}
+
+Unfortunately, both activities involve repetitive behaviors and
+suboptimal routines...
+
+------------------------------------------------------------------------
+
+For example, we might...
+
+::: incremental
+-   Duplicate our manuscript many times during co-edition
+-   Struggle with references and bibliographies
+-   Spend hours (days) reformating papers for resubmissions
+-   Paste many variants of a figure in our presentation/report
+-   Spend way to much title aligning items on Powerpoint
+-   Feel like it is a big effort to put together a few slides or a
+    report to describe our results
+-   Have no idea of how we could participate or animate large-scale
+    collaborations ! 🤪
+:::
+
+## Time wasted reduces your happiness
+
+And this is particularly true when it comes with collaborating with our
+peers.
+
+![](../_analyses/figures/happiness.png){fig-align="center" width="60%"}
+
+## What prevents us from collaborating more smoothly?
+
+::: {.incremental style="font-size: 80%;"}
+-   Endless multiplication of communication channels (Mattermost 😇)
+
+-   Data and code on local computers
+
+-   Suboptimal coding practices (no virtual envs, no version control,
+    absolute paths)
+
+-   Lack of knowledge regarding others interests, skills and activities
+
+-   Dependence upon Google Docs is increasingly problematic
+
+    -   And Google Docs is not even great
+
+-   Unnecessary differences in software use.
+
+-   ...?
+:::
+
+## A (tiny) reason to hope!
+
+![](../_analyses/figures/refManagement.png){fig-align="center"
+width="80%"}
+
+Most Cophy-makers already use Zotero or are willing to change. Users of
+Latex will be fine anyways.
+
+## A (bigger) reason to worry?
+
+It seems that Cophy-makers use a **huge** diversity of IDE, and that we
+are still a minority to use Git-based version control.
+
+![](../_analyses/figures/GitEditor.png){fig-align="center" width="80%"}
+
+PyCharm-Matlab people: who are you, what are your networks?🕵️
+
+## Towards a straightforward solution
+
+Correlation does not imply causation, but those who are still not using
+Git may still need to install Visual Studio Code.
+
+![](../_analyses/figures/crossGitVS.png){fig-align="center" width="60%"}
+
+# Tutorial!
+
+Be reassured: following it won't break your computer, it won't require
+much space and it is safe.
+
+## Visual Studio Code
+
+[Click here for the main installer](https://code.visualstudio.com/) and
+then get the next three extension:
+
+-   [Click here to get
+    SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+    capability (connect **directly** to the cluster, or any server, via
+    SSH!)
+-   [Click here to get Live
+    Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
+    real-time collaboration tool (great to debug and even write
+    together)
+-   [Click here to get a web
+    browser](https://marketplace.visualstudio.com/items?itemName=Phu1237.vs-browser)
+    inside VScode (**to follow the rest of this presentation** and
+    more!)
+
+[If you're waiting, you can get more extensions:
+[GitGraph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
+(to help dealing with messy Git), [Rainbow
+CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv)
+(to help reading CSVs), [Jupyter](#0)]{style="font-size:80%"}
+
+## Wait, how is this going to help with writing?
+
+Because it writing in VS Code is actually possible, and amazing, thanks
+to the [Markdow](https://www.markdownguide.org/) syntax combined with
+another **really powerful** tool, **Quarto**. ::: {.incremental
+style="font-size: 80%;"} - **Huge** improvement in the accessibility of
+Markdown thanks to a Word-like editor.
+
+-   **Amazing** reference management logics (flawless integration with
+    Zotero, Pubmed, Crossref, fromDOI, etc.)
+
+-   Possibility to write: code, articles, books, websites and.. simple
+    presentations like this one! ::: [Click
+    here](https://quarto.org/docs/get-started/) to get Quarto itself and
+    [here](https://marketplace.visualstudio.com/items?itemName=quarto.quarto)
+    to get the VScode extension.
+
+## Rationalized project management
+
+A scientific project has always more or less the same components:
+
+1. Raw data (to store separately if total >5gb or files >50mb)
+
+2. Analyses in various coding languages
+
+3. Preprocessed data and analysis output
+
+4. Presentations / Talks
+
+5. Manuscript
+
+6. Possibly a website
+   
+7. Quarto can greatly help with step 2-6.
+
+
+## Final step before discovering Quarto
+
+Now, we'll just need to make sure that everyone has:
+
+-   [Git](https://git-scm.com/)
+
+-   [Github CLI](https://cli.github.com/) (optional but useful if you
+    have a Github account)
+
+Once it's done, just close and restart.
+
+## Let's experiment with our collaboration pipeline
+
+For those who have VScode and the VPN configured, you may continue on
+the CRNL server.
+
+To do so, just click the bottom left button of VS code
+
+![](images/sshButton.png){fig-align="center" width="30%"}
+
+Choose "Connect to host" and enter: `ssh prenom.nom@10.69.168.62`
+
+Then enter your CRNL credentials (same as those who get you in the
+wiki!)
+
+For the others, you'll need
+[Anaconda](https://www.anaconda.com/download).
+
+## Get the tutorial repository
+
+First, if you had installed Quarto last time, please uninstall it and
+reinstall the pre-release version
+[v1.4](https://quarto.org/docs/download/)
+![](images/paste-1.png){fig-align="center" width="467"}
+
+-   Then, either visit `https://github.com/romainligneul/cophy-project`,
+    dowload (Code tab near the green button) and unzip in the desired
+    location.
+
+-   Or `cd` to the desired location and type:
+    `git clone https://github.com/romainligneul/cophy-project`
+
+## Create and load the virtual environment
+
+1.  Open a terminal
+
+2.  `cd` into the newly created cophy-project folder
+
+3.  type `conda env create --file=quarto-env.yml`
+
+4.  type `conda activate quarto-env`
+
+5.  type `python -m ipykernel install --user --name quarto-env`
+
+## Now, let's see if everything went well
+
+In principle, you should be able to create formatted files simply by
+typing the following commands:
+
+```         
+quarto render manuscript-template.qmd --to docx
+```
+
+A .docx document should appear in a newly create \_output directory.
+
+```         
+quarto preview manuscript-template.qmd --to html
+```
+
+A window should open and display an HTML version of the template.
+
+To generate PDFs, you'll have to run an extra line of code:
+
+```         
+quarto install tinytex`
+```
+
+```         
+quarto preview manuscript-template.qmd --to pdf
+```
+
+## Make a website
+
+If you can create a Word document with Quarto, you can also create a
+website! Let's have a look at what happens if we type:
+
+```         
+quarto preview website
+```
+
+You should see something like that:
+
+![](images/paste-2.png){fig-align="center" width="628"}
+
+Publishing the website online is straighforward if you use one of the
+solutions described on the [dedicated
+page](https://quarto.org/docs/publishing/).
+
+## Generate this presentation
+
+This presentation is actually included in the template. You can see it
+here.
+
+```         
+quarto preview presentation/presentation.qmd
+```
+
+If we want to get a Powerpoint rather than a HTML presentation, we can
+write:
+
+```         
+quarto render presentation/presentation.qmd --to pptx
+```
+
+## Thank you! {background-color="black" background-image="images/Picture1.jpg"}

@@ -1,0 +1,18 @@
+project:
+  type: website
+
+website:
+  title: "Example"
+  navbar:
+    background: primary
+    left:
+      - text: "Tutorial"
+        file: tutorial.qmd
+      - text: "About"
+        file: about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

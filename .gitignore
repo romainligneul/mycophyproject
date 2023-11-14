@@ -1,0 +1,7 @@
+_output
+.quarto
+_extensions
+/.quarto/
+_analyses/R/.Rproj.user
+_freeze
+website/site_libs

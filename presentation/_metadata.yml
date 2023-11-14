@@ -1,0 +1,5 @@
+format:
+  revealjs: 
+    menu: true
+    progress: false
+search: false
